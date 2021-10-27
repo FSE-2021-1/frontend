@@ -4,9 +4,12 @@ import {
   Container,
   Typography,
   makeStyles,
+  Tabs,
+  Tab,
 } from "@material-ui/core";
-import { useState } from "react";
-import { CreationModal, ESPTable } from "./components";
+import { useState, useEffect } from "react";
+import { CreationModal, ESPTable, PendingTable } from "./components";
+import io from "socket.io-client";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -16,25 +19,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const socket = io.connect("http://localhost:5000");
+
 const MainPage = () => {
   const classes = useStyles();
 
   const [data, setData] = useState([]);
 
-  const [isCreating, setIsCreating] = useState(false);
+  const [pendingESPS, setPendingESPS] = useState([{ id: "id123" }]);
 
-  const handleClick = () => {
-    setIsCreating(true);
-  };
+  const [currentTab, setCurrentTab] = useState("1");
 
-  const handleCreate = ({ id, input, output, local }) => {
-    setIsCreating(false);
-    setData((oldData) => [...oldData, { id, input, output, local }]);
-    // TODO: Complete ESP registration
-  };
+  useEffect(() => {
+    socket.on("new esp", (message) => {
+      setPendingESPS((oldValue) => [...oldValue, message]);
+    });
+  }, [setPendingESPS]);
 
-  const handleClose = () => {
-    setIsCreating(false);
+  const handleCreate = (data) => {
+    socket.emit("register", data);
+    setPendingESPS((oldValue) =>
+      oldValue.filter((item) => item.id !== data.id)
+    );
   };
 
   const handleSwitch = (id, value) => {
@@ -42,22 +48,22 @@ const MainPage = () => {
     console.log(id, value);
   };
 
+  const handleTabChange = (event, newValue) => {
+    setCurrentTab(newValue);
+  };
+
   return (
     <Container maxWidth="lg">
       <Typography variant="h4">Trabalho Final de FSE</Typography>
-      <Box className={classes.header}>
-        {/*TODO remove button due new ESP flux*/}
-        <Button variant="contained" color="primary" onClick={handleClick}>
-          Adicionar ESP
-        </Button>
-      </Box>
-      <ESPTable data={data} onSwitchChange={handleSwitch} />
-      <CreationModal
-        open={isCreating}
-        id={Math.random().toString(36).substring(7)}
-        onCreate={handleCreate}
-        onClose={handleClose}
-      />
+      <Tabs value={currentTab} onChange={handleTabChange}>
+        <Tab label="ESPs atuais" value="1" />
+        <Tab label="ESPs pendentes" value="2" />
+      </Tabs>
+      {currentTab === "1" ? (
+        <ESPTable data={data} onSwitchChange={handleSwitch} />
+      ) : (
+        <PendingTable data={pendingESPS} onRegister={handleCreate} />
+      )}
     </Container>
   );
 };
