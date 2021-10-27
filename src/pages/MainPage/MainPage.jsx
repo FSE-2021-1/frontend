@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Button,
   Container,
@@ -57,7 +58,14 @@ const MainPage = () => {
       <Typography variant="h4">Trabalho Final de FSE</Typography>
       <Tabs value={currentTab} onChange={handleTabChange}>
         <Tab label="ESPs atuais" value="1" />
-        <Tab label="ESPs pendentes" value="2" />
+        <Tab
+          label={
+            <Badge badgeContent={pendingESPS.length} color="primary">
+              ESPs pendentes
+            </Badge>
+          }
+          value="2"
+        />
       </Tabs>
       {currentTab === "1" ? (
         <ESPTable data={data} onSwitchChange={handleSwitch} />
