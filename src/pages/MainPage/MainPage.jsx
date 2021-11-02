@@ -27,7 +27,7 @@ const MainPage = () => {
 
   const [data, setData] = useState([]);
 
-  const [pendingESPS, setPendingESPS] = useState([{ id: "id123" }]);
+  const [pendingESPS, setPendingESPS] = useState([]);
 
   const [currentTab, setCurrentTab] = useState("1");
 
