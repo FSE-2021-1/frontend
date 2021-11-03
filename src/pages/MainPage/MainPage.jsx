@@ -32,11 +32,18 @@ const MainPage = () => {
   const [currentTab, setCurrentTab] = useState("1");
 
   useEffect(() => {
+    socket.on("connect", () => {
+      socket.emit("req state", socket.id);
+    });
+  }, []);
+
+  useEffect(() => {
     socket.on("new esp", (message) => {
       setPendingESPS((oldValue) => [...oldValue, message]);
     });
 
     socket.on("state", (message) => {
+      console.log("New State received");
       setData(message);
     });
   }, [setPendingESPS, setData]);
