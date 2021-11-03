@@ -35,6 +35,10 @@ const MainPage = () => {
     socket.on("new esp", (message) => {
       setPendingESPS((oldValue) => [...oldValue, message]);
     });
+
+    socket.on("state", (message) => {
+      setData(message);
+    });
   }, [setPendingESPS]);
 
   const handleCreate = (data) => {
