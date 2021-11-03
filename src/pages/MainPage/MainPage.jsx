@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("http://localhost:5005");
 
 const MainPage = () => {
   const classes = useStyles();
