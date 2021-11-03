@@ -39,7 +39,7 @@ const MainPage = () => {
     socket.on("state", (message) => {
       setData(message);
     });
-  }, [setPendingESPS]);
+  }, [setPendingESPS, setData]);
 
   const handleCreate = (data) => {
     socket.emit("register", data);
