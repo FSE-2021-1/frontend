@@ -56,8 +56,7 @@ const MainPage = () => {
   };
 
   const handleSwitch = (id, value) => {
-    // TODO: ESP output switch
-    console.log(id, value);
+    socket.emit("push output state", id, value);
   };
 
   const handleTabChange = (event, newValue) => {

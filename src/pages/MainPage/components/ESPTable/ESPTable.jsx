@@ -7,6 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@material-ui/core";
 
 const ESPTable = ({ data, onSwitchChange }) => {
@@ -17,6 +18,7 @@ const ESPTable = ({ data, onSwitchChange }) => {
           <TableRow>
             <TableCell>ID</TableCell>
             <TableCell>Local</TableCell>
+            <TableCell>Dados</TableCell>
             <TableCell>Entrada</TableCell>
             <TableCell>Saída</TableCell>
           </TableRow>
@@ -27,10 +29,18 @@ const ESPTable = ({ data, onSwitchChange }) => {
               <TableRow key={esp.id}>
                 <TableCell>{esp.id}</TableCell>
                 <TableCell>{esp.local}</TableCell>
-                <TableCell>{esp.input}</TableCell>
+                <TableCell>
+                  <Typography variant="body2">
+                    Temperatura: <span>{esp.temperature}</span> ºC
+                  </Typography>
+                  <Typography variant="body2">
+                    Umidade: <span>{esp.humidity} %</span>
+                  </Typography>
+                </TableCell>
+                <TableCell>{esp.input.name}</TableCell>
                 <TableCell>
                   <Box>
-                    <span>{esp.output}</span>
+                    <span>{esp.output.name}</span>
                     <Switch
                       color="primary"
                       size="medium"
