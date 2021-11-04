@@ -1,6 +1,6 @@
 import {
   Box,
-  Switch,
+  Slider,
   Table,
   TableBody,
   TableCell,
@@ -30,21 +30,26 @@ const ESPTable = ({ data, onSwitchChange }) => {
                 <TableCell>{esp.id}</TableCell>
                 <TableCell>{esp.local}</TableCell>
                 <TableCell>
-                  <Typography variant="body2">
-                    Temperatura: <span>{esp.temperature}</span> ºC
-                  </Typography>
-                  <Typography variant="body2">
-                    Umidade: <span>{esp.humidity} %</span>
-                  </Typography>
+                  {Number.isInteger(esp.temperature) && (
+                    <Typography variant="body2">
+                      Temperatura: <span>{esp.temperature}</span> ºC
+                    </Typography>
+                  )}
+                  {Number.isInteger(esp.humidity) && (
+                    <Typography variant="body2">
+                      Umidade: <span>{esp.humidity} %</span>
+                    </Typography>
+                  )}
                 </TableCell>
                 <TableCell>{esp.input.name}</TableCell>
                 <TableCell>
                   <Box>
                     <span>{esp.output.name}</span>
-                    <Switch
-                      color="primary"
-                      size="medium"
-                      onChange={(e) => onSwitchChange(esp.id, e.target.checked)}
+                    <Slider
+                      size="small"
+                      value={esp.output.value}
+                      onChange={(e, value) => onSwitchChange(esp.id, value)}
+                      valueLabelDisplay="auto"
                     />
                   </Box>
                 </TableCell>
