@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 
 const ESPTable = ({ data, onSwitchChange }) => {
+  console.log("teste:", data[0].temperature, data[0].humidity);
   return (
     <TableContainer>
       <Table>
@@ -30,14 +31,14 @@ const ESPTable = ({ data, onSwitchChange }) => {
                 <TableCell>{esp.id}</TableCell>
                 <TableCell>{esp.local}</TableCell>
                 <TableCell>
-                  {Number.isInteger(esp.temperature) && (
+                  {!Number.isNaN(esp.temperature) && (
                     <Typography variant="body2">
-                      Temperatura: <span>{esp.temperature}</span> ºC
+                      Temperatura: <span>{esp.temperature.toFixed(2)}</span> ºC
                     </Typography>
                   )}
-                  {Number.isInteger(esp.humidity) && (
+                  {!Number.isNaN(esp.humidity) && (
                     <Typography variant="body2">
-                      Umidade: <span>{esp.humidity} %</span>
+                      Umidade: <span>{esp.humidity.toFixed(2)} %</span>
                     </Typography>
                   )}
                 </TableCell>
