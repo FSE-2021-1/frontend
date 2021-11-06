@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 
 const ESPTable = ({ data, onSwitchChange }) => {
-
   return (
     <TableContainer>
       <Table>
@@ -44,10 +43,12 @@ const ESPTable = ({ data, onSwitchChange }) => {
                 </TableCell>
                 <TableCell>{esp.input.name}</TableCell>
                 <TableCell>
-                  <Box>
+                  <Box style={{ marginRight: 12 }}>
                     <span>{esp.output.name}</span>
                     <Slider
                       size="small"
+                      min={0}
+                      max={255}
                       value={esp.output.value}
                       onChange={(e, value) => onSwitchChange(esp.id, value)}
                       valueLabelDisplay="auto"
