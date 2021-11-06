@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 
 const ESPTable = ({ data, onSwitchChange }) => {
-  console.log("teste:", data[0].temperature, data[0].humidity);
+
   return (
     <TableContainer>
       <Table>
