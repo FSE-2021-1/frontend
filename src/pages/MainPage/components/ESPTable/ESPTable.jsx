@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   IconButton,
   Slider,
@@ -10,7 +11,8 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
-import { Eject } from "@material-ui/icons";
+import Adjust from "@material-ui/icons/Adjust";
+import Eject from "@material-ui/icons/Eject";
 
 const ESPTable = ({ data, onSwitchChange, onDelete }) => {
   return (
@@ -44,7 +46,17 @@ const ESPTable = ({ data, onSwitchChange, onDelete }) => {
                     </Typography>
                   )}
                 </TableCell>
-                <TableCell>{esp.input.name}</TableCell>
+                <TableCell>
+                  <span>{esp.input.name}</span>
+                  <Avatar
+                    variant="circle"
+                    style={{
+                      backgroundColor: esp.input.value ? "#0DF205" : undefined,
+                    }}
+                  >
+                    <Adjust />
+                  </Avatar>
+                </TableCell>
                 <TableCell>
                   <Box style={{ marginRight: 12 }}>
                     <span>{esp.output.name}</span>
