@@ -1,5 +1,6 @@
 import {
   Box,
+  IconButton,
   Slider,
   Table,
   TableBody,
@@ -9,8 +10,9 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
+import { Eject } from "@material-ui/icons";
 
-const ESPTable = ({ data, onSwitchChange }) => {
+const ESPTable = ({ data, onSwitchChange, onDelete }) => {
   return (
     <TableContainer>
       <Table>
@@ -21,6 +23,7 @@ const ESPTable = ({ data, onSwitchChange }) => {
             <TableCell>Dados</TableCell>
             <TableCell>Entrada</TableCell>
             <TableCell>Saída</TableCell>
+            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
@@ -54,6 +57,11 @@ const ESPTable = ({ data, onSwitchChange }) => {
                       valueLabelDisplay="auto"
                     />
                   </Box>
+                </TableCell>
+                <TableCell>
+                  <IconButton onClick={() => onDelete(esp.id)}>
+                    <Eject />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}

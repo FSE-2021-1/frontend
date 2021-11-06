@@ -42,9 +42,11 @@ const MainPage = () => {
       setPendingESPS((oldValue) => [...oldValue, message]);
     });
 
-    socket.on("state", (message) => {
-      console.log("New State received");
-      setData(message);
+    socket.on("state", (data, pending) => {
+      setData(data);
+      if (pending) {
+        setPendingESPS(pending);
+      }
     });
   }, [setPendingESPS, setData]);
 
@@ -63,6 +65,10 @@ const MainPage = () => {
     setCurrentTab(newValue);
   };
 
+  const handleDelete = (id) => {
+    socket.emit("delete esp", id);
+  };
+
   return (
     <Container maxWidth="lg">
       <Typography variant="h4">Trabalho Final de FSE</Typography>
@@ -78,7 +84,11 @@ const MainPage = () => {
         />
       </Tabs>
       {currentTab === "1" ? (
-        <ESPTable data={data} onSwitchChange={handleSwitch} />
+        <ESPTable
+          data={data}
+          onSwitchChange={handleSwitch}
+          onDelete={handleDelete}
+        />
       ) : (
         <PendingTable data={pendingESPS} onRegister={handleCreate} />
       )}
