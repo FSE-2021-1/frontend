@@ -35,12 +35,12 @@ const ESPTable = ({ data, onSwitchChange, onDelete }) => {
                 <TableCell>{esp.id}</TableCell>
                 <TableCell>{esp.local}</TableCell>
                 <TableCell>
-                  {!Number.isNaN(esp.temperature) && (
+                  {esp.temperature && !Number.isNaN(esp.temperature) && (
                     <Typography variant="body2">
                       Temperatura: <span>{esp.temperature.toFixed(2)}</span> ºC
                     </Typography>
                   )}
-                  {!Number.isNaN(esp.humidity) && (
+                  {esp.humidity && !Number.isNaN(esp.humidity) && (
                     <Typography variant="body2">
                       Umidade: <span>{esp.humidity.toFixed(2)} %</span>
                     </Typography>
