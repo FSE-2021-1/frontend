@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { CreationModal, ESPTable, PendingTable } from "./components";
 import io from "socket.io-client";
 
+
 const useStyles = makeStyles((theme) => ({
   header: {
     marginTop: theme.spacing(2),
@@ -88,6 +89,7 @@ const MainPage = () => {
           data={data}
           onSwitchChange={handleSwitch}
           onDelete={handleDelete}
+          socket={socket}
         />
       ) : (
         <PendingTable data={pendingESPS} onRegister={handleCreate} />

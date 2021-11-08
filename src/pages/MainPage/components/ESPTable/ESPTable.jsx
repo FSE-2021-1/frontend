@@ -10,13 +10,63 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Switch,
+  FormControlLabel,
 } from "@material-ui/core";
+import { useState, useEffect } from "react";
 import Adjust from "@material-ui/icons/Adjust";
 import Eject from "@material-ui/icons/Eject";
 
-const ESPTable = ({ data, onSwitchChange, onDelete }) => {
+import Alarm from "../../../../alarm.mp3";
+
+const useAudio = (path, socket) => {
+  const [audio] = useState(new Audio(path));
+  const [playing, setPlaying] = useState(false);
+
+  const toggle = () => setPlaying(!playing);
+
+  useEffect(() => {
+      playing ? audio.play() : audio.pause();
+      socket.emit('alarm', playing);
+    },
+    [playing]
+  );
+
+  useEffect(() => {
+    audio.addEventListener('ended', () => setPlaying(false));
+    return () => {
+      audio.removeEventListener('ended', () => setPlaying(false));
+    };
+  }, []);
+
+  return [playing, setPlaying, toggle];
+};
+
+const ESPTable = ({ data, onSwitchChange, onDelete, socket }) => {
+
+  const [playing, setPlaying, toggle] = useAudio(Alarm, socket);
+
+  useEffect(() => {
+    let playAlarm = false;
+    data.forEach(esp => {
+      if (esp.input.value) {
+        playAlarm = true;
+      }
+    });
+    setPlaying(playAlarm);
+  }, [data]);
+
   return (
     <TableContainer>
+      <FormControlLabel
+          control={
+            <Switch
+              checked={playing}
+              onChange={toggle}
+            />
+          }
+          label="Alarme"
+        />
       <Table>
         <TableHead>
           <TableRow>
