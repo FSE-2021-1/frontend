@@ -27,6 +27,10 @@ const PendingTable = ({ data, onRegister }) => {
     setOpen(false);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <TableContainer>
@@ -56,7 +60,7 @@ const PendingTable = ({ data, onRegister }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <CreationModal open={open} id={currentId} onCreate={handleRegister} />
+      <CreationModal open={open} id={currentId} onCreate={handleRegister} onClose={handleClose} />
     </>
   );
 };
